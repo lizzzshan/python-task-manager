@@ -8,22 +8,33 @@ tasks = []
 # Auxillary functions
 def displayTasks(tasks):
     print('----------------- Your tasks -----------------')
-    for index, task in enumerate(tasks):
-        print(index+1, '-', task )
+    if len(tasks) == 0:
+        print('\n No current tasks. \n')
+    else:
+        for index, task in enumerate(tasks):
+            print(index+1, '-', task )
     print('----------------------------------')
 
 # Task menu bar for operations
 def menu(tasks):
     # Prompt user input
-    action = input('Please select a number: \n \n 1 - Add task \n 2- Edit task \n 3 - Delete Task \n \n')
+    user_input = input('Please select a number: \n \n A - Add task \n V - View task list \n D - Delete Task \n E - Edit task \n Q - Quit \n \n')
+    # convert input to lowercase to simplify the match action 
+    action = user_input.lower()
     # Switch statement (using match)
     match action:
-        case '1':
+        case 'a':
             addTask(tasks)
-        case '2':
-            print('TODO: Edit task')
-        case '3':
+        case 'v':
+            displayTasks(tasks)
+            menu(tasks)
+        case 'd':
             deleteTask(tasks)
+        case 'e':
+            print('TODO')
+        case 'q':
+            print('Exiting program...')
+            return 0
         case _:
             print('Invalid input, try again')
             menu(tasks)
@@ -52,6 +63,9 @@ def deleteTask(tasks):
     tasks.remove(tasks[int(task_num)-1])
     print('Removed \n')
     displayTasks(tasks)
+
+    # bring back to menu
+    menu(tasks)
 
 # Main application 
 menu(tasks)
