@@ -31,7 +31,7 @@ def menu(tasks):
         case 'd':
             deleteTask(tasks)
         case 'e':
-            print('TODO')
+            editTask(tasks)
         case 'q':
             print('Exiting program...')
             return 0
@@ -67,5 +67,17 @@ def deleteTask(tasks):
     # bring back to menu
     menu(tasks)
 
+# --------------- EDIT  ------------------------------------------------------------- #
+def editTask(tasks):
+    edit_num = input('Please select the number of the task you would like to edit: ')
+    new_task = input('Edit task: ')
+
+    tasks[int(edit_num)-1] = new_task
+
+    print('Task edited \n')
+    displayTasks(tasks)
+
+    # bring back to menu
+    menu(tasks)
 # Main application 
 menu(tasks)
