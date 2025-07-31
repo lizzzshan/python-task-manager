@@ -1,8 +1,5 @@
-# Goals: Starting off with a basic task manager project
-# Add task
-# Edit task
-# Remove Task 
-# Add/Remove task note
+# Goals: Starting off with a basic task manager project, then add complexity
+# to do: Connect to a database to locally store task inputs 
 tasks = []
 
 # Auxillary functions
@@ -58,25 +55,33 @@ def deleteTask(tasks):
     # Delete 1 task
     input_num = input('Enter the number corresponding to the task you would like to delete: ')
     task_num = int(input_num)-1
-    print('Removing', tasks[int(task_num)])
 
-    tasks.remove(tasks[int(task_num)-1])
-    print('Removed \n')
-    displayTasks(tasks)
-
+    #validate that user input is within bounds 
+    #print('length: ', len(tasks))
+    if task_num <= len(tasks):
+        print('Removing', tasks[int(task_num)])
+        tasks.remove(tasks[int(task_num)-1])
+        print('Removed \n')
+        displayTasks(tasks)
+    else:
+        print('ERROR: Input not within bounds. Nothing deleted. \n ')
     # bring back to menu
     menu(tasks)
 
 # --------------- EDIT  ------------------------------------------------------------- #
 def editTask(tasks):
-    edit_num = input('Please select the number of the task you would like to edit: ')
-    new_task = input('Edit task: ')
+    input_num = input('Please select the number of the task you would like to edit: ')
+    edit_num = int(input_num)-1
 
-    tasks[int(edit_num)-1] = new_task
-
-    print('Task edited \n')
-    displayTasks(tasks)
-
+    #validate that user input is within bounds 
+    if edit_num <= len(tasks):
+        new_task = input('Edit task: ')
+        tasks[int(edit_num)] = new_task
+        print('Task edited \n')
+        displayTasks(tasks)
+    else:
+        print('ERROR: Input not within bounds. Nothing edited. \n ')
+        
     # bring back to menu
     menu(tasks)
 # Main application 
