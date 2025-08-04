@@ -1,10 +1,15 @@
 # Goals: Starting off with a basic task manager project, then add complexity
 # to do: Connect to a database to locally store task inputs 
+
+# SQL connector for database
+# import mysql.connector
+
 tasks = []
+completedTasks = []
 
 # Auxillary functions
 def displayTasks(tasks):
-    print('----------------- Your tasks -----------------')
+    print('----------------------------------')
     if len(tasks) == 0:
         print('\n No current tasks. \n')
     else:
@@ -15,7 +20,7 @@ def displayTasks(tasks):
 # Task menu bar for operations
 def menu(tasks):
     # Prompt user input
-    user_input = input('Please select a number: \n \n A - Add task \n V - View task list \n D - Delete Task \n E - Edit task \n Q - Quit \n \n')
+    user_input = input('Please select a number: \n \n A - Add task \n V - View current task list \n D - Delete Task \n E - Edit task \n C - Mark completed \n J - View completed task list \n Q - Quit \n \n')
     # convert input to lowercase to simplify the match action 
     action = user_input.lower()
     # Switch statement (using match)
@@ -23,12 +28,19 @@ def menu(tasks):
         case 'a':
             addTask(tasks)
         case 'v':
+            print('Your current tasks: ')
             displayTasks(tasks)
             menu(tasks)
         case 'd':
             deleteTask(tasks)
         case 'e':
             editTask(tasks)
+        case 'c':
+            markCompleted(tasks)
+        case 'j':
+            print('Your completed tasks: ')
+            displayTasks(completedTasks)
+            menu(completedTasks)
         case 'q':
             print('Exiting program...')
             return 0
@@ -82,6 +94,27 @@ def editTask(tasks):
     else:
         print('ERROR: Input not within bounds. Nothing edited. \n ')
         
+    # bring back to menu
+    menu(tasks)
+
+def markCompleted(tasks):
+    # while task list is not empty
+    if(len(tasks) > 0):
+
+        input_task = input('Select completed task number: ')
+        input_num = int(input_task) - 1
+
+        # Store into completed tasks
+        completedTasks.append(tasks[input_num])
+        print('Your completed tasks: ')
+        displayTasks(completedTasks)
+
+        # Remove from current task list 
+        tasks.remove(tasks[input_num])
+
+        # print(tasks, completedTasks) # Debugging, checking global arrays
+    else:
+        print('ERROR! Task list is empty. \n')
     # bring back to menu
     menu(tasks)
 # Main application 
